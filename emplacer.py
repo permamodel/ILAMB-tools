@@ -54,6 +54,9 @@ for model in model_list:
     else:
         mstmip_variable_dir = os.path.join(models_dir, model, mstmip_variable)
         print 'Destination:', mstmip_variable_dir
-        os.mkdir(mstmip_variable_dir)  # mode isn't set properly
-        os.chmod(mstmip_variable_dir, 0775)
+        try:
+            os.mkdir(mstmip_variable_dir)
+        except OSError:
+            print 'Destination directory exists'
+        os.chmod(mstmip_variable_dir, 0775)  # mode isn't set properly
         shutil.copy(transfer_file, mstmip_variable_dir)
