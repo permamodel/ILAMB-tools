@@ -13,7 +13,8 @@ lat = latbnd.mean(axis=1)
 lon = lonbnd.mean(axis=1)
 
 mask_data = np.loadtxt('data/above_mask.txt', dtype=int)
-missing = 0
+mask_data -= 1  # Mask indexing starts at zero in ILAMB
+missing = -1
 
 ids = np.ma.masked_values(mask_data, missing)
 lbl = np.asarray(['ABoVE'])
