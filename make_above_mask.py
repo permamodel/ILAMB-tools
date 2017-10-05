@@ -4,15 +4,19 @@ import numpy as np
 from netCDF4 import Dataset
 
 
+# Longitudes must be defined on [-180,180] in ILAMB.
 res = 0.5
 latbnd = np.asarray([np.arange(-90, 90, res),
                      np.arange(-90 + res, 90 + 0.01, res)]).T
-lonbnd = np.asarray([np.arange(0, 360, res),
-                     np.arange(0 + res, 360 + 0.01, res)]).T
+lonbnd = np.asarray([np.arange(-180, 180, res),
+                     np.arange(-180 + res, 180 + 0.01, res)]).T
 lat = latbnd.mean(axis=1)
 lon = lonbnd.mean(axis=1)
 
+# Mask data values are [0,1], with shape (360,720), and longitudes
+# on [0,360].
 mask_data = np.loadtxt('data/above_mask.txt', dtype=int)
+mask_data = np.roll(mask_data, 360, axis=1)  # Shift data to match lon vector
 mask_data -= 1  # Mask indexing starts at zero in ILAMB
 missing = -1
 
