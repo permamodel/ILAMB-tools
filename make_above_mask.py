@@ -15,7 +15,7 @@ lon = lonbnd.mean(axis=1)
 
 # Mask data values are [0,1], with shape (360,720), and longitudes
 # on [0,360].
-mask_data = np.loadtxt('data/above_mask.txt', dtype=int)
+mask_data = np.loadtxt('data/above_mask.txt', dtype=np.int16)
 mask_data = np.roll(mask_data, 360, axis=1)  # Shift data to match lon vector
 mask_data -= 1  # Mask indexing starts at zero in ILAMB
 missing = -1
